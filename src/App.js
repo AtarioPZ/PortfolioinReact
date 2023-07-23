@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import Home from './components/home';
+import GameProjects from './components/gameprojects';
+import AppProjects from './components/appprojects';
+import Navigation from './components/navgitaion';
+import Footer from './components/footer';
 
-function App() {
+const ScrollToTop = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location, navigate]);
+
+  return null;
+};
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <ScrollToTop />
+      <Navigation />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/gameprojects" element={<GameProjects />} />
+        <Route path="/appprojects" element={<AppProjects />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
