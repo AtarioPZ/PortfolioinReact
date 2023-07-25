@@ -3,8 +3,10 @@ import { BrowserRouter, Route, Routes, useLocation, useNavigate } from 'react-ro
 import Home from './components/home';
 import GameProjects from './components/gameprojects';
 import AppProjects from './components/appprojects';
-import Navigation from './components/navgitaion';
+import Navigation from './components/navigation';
 import Footer from './components/footer';
+import { ThemeProvider } from './components/themecontrol';
+import './colors.css'
 
 const ScrollToTop = () => {
   const location = useLocation();
@@ -20,14 +22,16 @@ const ScrollToTop = () => {
 const App = () => {
   return (
     <BrowserRouter>
-      <ScrollToTop />
-      <Navigation />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/gameprojects" element={<GameProjects />} />
-        <Route path="/appprojects" element={<AppProjects />} />
-      </Routes>
-      <Footer />
+      <ThemeProvider>
+        <ScrollToTop />
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/gameprojects" element={<GameProjects />} />
+          <Route path="/appprojects" element={<AppProjects />} />
+        </Routes>
+        <Footer />
+      </ThemeProvider>
     </BrowserRouter>
   );
 };

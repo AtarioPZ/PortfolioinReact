@@ -1,72 +1,58 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Logo from "../media/logo/logo.png";
+import { Link } from "react-router-dom";
+import { useTheme } from "./themecontrol";
 
 function Navigation() {
+  const { darkMode, toggleTheme } = useTheme();
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav
+      className={`navbar navbar-expand-lg ${
+        darkMode ? "navbar-dark bg-dark" : "navbar-light bg-light"
+      }`}
+    >
       <div className="container-fluid">
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <Link to="/" className="nav-link active">
-                Home
-              </Link>
-            </li>
-            <li className="nav-item dropdown">
-              <Link
-                to="/projects"
-                className="nav-link dropdown-toggle"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Projects
-              </Link>
-              <ul className="dropdown-menu bg-secondary">
-                <li>
-                  <Link to="/gameprojects" className="dropdown-item">
-                    Games
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/appprojects" className="dropdown-item">
-                    Others
-                  </Link>
-                </li>
-              </ul>
-            </li>
-          </ul>
+        <div className="flex-column justify-content-start align-items-end flex-grow-1">
+          <button
+            className="btn btn-light"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#contactModal"
+          >
+            Contact Me
+          </button>
         </div>
-        <Link to="/" className="navbar-brand">
-          <img src={Logo} height="50" alt="Profile Logo" />
-        </Link>
-        <div className="d-flex flex-column-reverse">
-          <div className="p-2">
-            <div className="bd-example">
-              <p>
-                <button
-                  className="btn btn-primary"
-                  type="button"
-                  data-bs-toggle="modal"
-                  data-bs-target="#contactModal"
-                >
-                  Contact Me
-                </button>
-              </p>
-            </div>
+
+        {/* Brand Logo*/}
+        <div className="d-flex justify-content-center align-items-center flex-grow-1">
+          <div className="logo-container">
+            <Link to="/" className="navbar-brand">
+              <img
+                src={Logo}
+                height="50"
+                alt="Profile Logo"
+                style={{ margin: "auto" }}
+              />
+            </Link>
           </div>
+        </div>
+
+        {/* Toggle Theme Switch*/}
+        <div className="d-flex justify-content-end align-items-center flex-grow-1">
+          <button
+            className={`btn btn-toggle-theme ${
+              darkMode ? "text-warning" : "text-primary"
+            }`}
+            onClick={toggleTheme}
+            aria-label="Toggle Theme"
+          >
+            {darkMode ? (
+              <i className="bi bi-sun-fill"></i>
+            ) : (
+              <i className="bi bi-moon-fill"></i>
+            )}
+          </button>
         </div>
       </div>
 

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import other1 from '../media/app/other1.png';
 import other2 from '../media/app/other2.png';
 import other3 from '../media/app/other3.png';
 import other4 from '../media/app/other4.png';
-import HeroBackground from '../media/background/bg.png';
+import { useTheme } from "./themecontrol";
 
 const appProjectsData = [
     {
@@ -44,18 +44,32 @@ const appProjectsData = [
     },
   ];
 
+const tagColor = "#ff9800";
+
 const AppProjects = () => {
+  const { darkMode } = useTheme();
+  const [showProjects, setShowProjects] = useState(false);
+
+  useEffect(() => {
+    setShowProjects(true);
+  }, []);
+
   return (
     <>
       {/* Hero Section */}
       <div
-        className="hero-section bg-dark text-white py-5"
-        style={{ backgroundImage: `url(${HeroBackground})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+        className={`hero-section ${
+          darkMode ? 'bg-dark' : 'bg-light bg-gradient light-mode-gradient-header'
+        } text-${darkMode ? 'white' : 'black'} py-5`}
+        style={{ position: "relative" }}
       >
         <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-md-8 text-center">
-              <h1 className="display-4 animate__animated animate__fadeInDown" style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}>
+          <div className="row justify-content-center ">
+            <div className="col-md-8 text-center ">
+              <h1
+                className="display-4 animate__animated animate__fadeInDown"
+                style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
+              >
                 Other Projects:
               </h1>
             </div>
@@ -64,64 +78,112 @@ const AppProjects = () => {
       </div>
 
       {/* Projects Section */}
-      <div>
-        <div className="album py-5 bg-dark bg-gradient">
-          <div className="container">
-            <div className="row justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-              {appProjectsData.map((project, index) => (
-                <div key={index} className="col">
-                  <div className="card shadow-sm opacity-75">
-                    <div className="bg-dark bg-gradient text-white d-flex justify-content-center">
-                      <h3>{project.title}</h3>
+      <div
+        className={`projects-section py-5 ${
+          darkMode ? 'bg-dark bg-gradient' : 'bg-light bg-gradient light-mode-gradient'
+        } text-${darkMode ? 'white' : 'black'}`}
+      >
+        <div className="container my-2">
+          <div className="row justify-content-center">
+            {appProjectsData.map((project, index) => (
+              <div
+              key={index}
+              className={`col-md-6 mb-4 ${
+                showProjects
+                  ? "animate__animated animate__fadeInLeft"
+                  : "opacity-0"
+              }`}
+              style={{ transitionDelay: `${index * 0.2}s` }}
+            >
+                <div
+                  className={`card h-100 shadow-sm opacity-90 ${
+                    darkMode ? "bg-secondary" : "bg-light"
+                  }`}
+                  style={{
+                    background: darkMode ? "#303030" : "#f0f0f0",
+                    border: `1px solid ${tagColor}`,
+                  }}
+                >
+                  <div className="row g-0">
+                    <div className="col-md-6">
+                      <img
+                        src={project.image}
+                        className="img-fluid rounded"
+                        alt={project.title}
+                      />
                     </div>
-                    <img src={project.image} height="400" alt={project.title} />
-                    <div className="card-body bg-light">
-                      <p className="card-text">{project.description}</p>
-                      {project.features && project.features.length > 0 && (
-                        <>
-                          <p>Features:</p>
-                          <ul>
-                            {project.features.map((feature, idx) => (
-                              <li key={idx}>{feature}</li>
-                            ))}
-                          </ul>
-                        </>
-                      )}
-                      <div className="d-flex justify-content-center my-4">
-                        <div className="work-item-tags-container">
-                          {project.tags.map((tag, idx) => (
-                            <span key={idx} style={{ color: 'white', padding: '8px', background: '#506347', marginRight: '8px' }}>
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      <div>
-                        <div className="accordion" id={`accordionPanelsStayOpenExample${index}`}>
-                          <div className="accordion-item">
-                            <h2 className="accordion-header">
-                              <button
-                                className="accordion-button"
-                                type="button"
-                                data-bs-toggle="collapse"
-                                data-bs-target={`#panelsStayOpen-collapse${index}`}
-                                aria-expanded="true"
-                                aria-controls={`panelsStayOpen-collapse${index}`}
+                    <div className="col-md-6">
+                      <div className="card-body">
+                        <h3
+                          className={`card-title ${
+                            darkMode ? "text-white" : "text-dark"
+                          }`}
+                          style={{ color: "#d4e157" }}
+                        >
+                          {project.title}
+                        </h3>
+                        <p
+                          className={`card-text ${
+                            darkMode ? "text-white" : "text-dark"
+                          }`}
+                        >
+                          {project.description}
+                        </p>
+                        <div className="d-flex justify-content-center my-4">
+                          <div className="work-item-tags-container">
+                            {project.tags.map((tag, idx) => (
+                              <span
+                                key={idx}
+                                className={`work-item-tag capsule ${
+                                  darkMode
+                                    ? "text-white bg-secondary"
+                                    : "text-dark bg-light"
+                                }`}
+                                style={{ background: '#FFA500' }}
                               >
-                                View Project Link
-                              </button>
-                            </h2>
-                            <div id={`panelsStayOpen-collapse${index}`} className="accordion-collapse collapse">
-                              <div className="accordion-body">
-                                <ul>
-                                  {project.links.map((link, idx) => (
-                                    <li key={idx} className="nav-item">
-                                      <a className="nav-link active" target="_blank" aria-current="page" href={link.url}>
-                                        {link.name}
-                                      </a>
-                                    </li>
-                                  ))}
-                                </ul>
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <div
+                            className="accordion"
+                            id={`accordionPanelsStayOpenExample${index}`}
+                          >
+                            <div className="accordion-item">
+                              <h2 className="accordion-header">
+                                <button
+                                  className="accordion-button"
+                                  type="button"
+                                  data-bs-toggle="collapse"
+                                  data-bs-target={`#panelsStayOpen-collapse${index}`}
+                                  aria-expanded="true"
+                                  aria-controls={`panelsStayOpen-collapse${index}`}
+                                >
+                                  View Project Link
+                                </button>
+                              </h2>
+                              <div
+                                id={`panelsStayOpen-collapse${index}`}
+                                className="accordion-collapse collapse"
+                              >
+                                <div className="accordion-body">
+                                  <ul>
+                                    {project.links.map((link, idx) => (
+                                      <li key={idx} className="nav-item">
+                                        <a
+                                          className="nav-link active"
+                                          target="_blank"
+                                          aria-current="page"
+                                          href={link.url}
+                                        >
+                                          {link.name}
+                                        </a>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -130,8 +192,8 @@ const AppProjects = () => {
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

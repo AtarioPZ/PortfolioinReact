@@ -1,0 +1,20 @@
+/* colors.css */
+.light-mode-gradient {
+  /* For modern browsers (gradient support) */
+  background: linear-gradient(135deg, #edd29c, #81a9da) !important;
+
+  /* For older browsers (fallback color) */
+  background: #a0cbdf;
+}
+
+.light-mode-gradient-header{
+  /* For modern browsers (gradient support) */
+  background: linear-gradient(135deg, #cee2fa, #9ddfbf) !important;
+
+  /* For older browsers (fallback color) */
+  background: #a0cbdf;
+}
+
+.light-mode-box{
+  background: #9faaac;
+}
